@@ -98,7 +98,7 @@ cryptocurrency, crypto, miner, mine, mining
 <br>
 
 <fieldset name="active_miner_list">
-    <legend>Active Miners ({{ active_miners|length }})</legend>
+    <legend>Active Miners ({{ active_miners|length }} <a target="_blank" href="/all/total">JSON info</a>)</legend>
     <table style="width:100%">
         <tr>
             <th>IP Address</th>
@@ -114,7 +114,7 @@ cryptocurrency, crypto, miner, mine, mining
             <th>HW Error Rate %</th>
             <th>Uptime</th>
             <th>Status</th>
-            <!--<th>JSON Info</th>-->
+            <th>JSON Info</th>
             <th>Remove</th>
         </tr>
         {%- for active_miner in active_miners|sort(attribute='ip') %}
@@ -133,9 +133,9 @@ cryptocurrency, crypto, miner, mine, mining
                 <td>{{ uptimes[active_miner.ip] }}</td>
                 <td title="{%- if active_miner.ip in miner_errors %}{{ miner_errors[active_miner.ip] }}{%- endif %}">
                     {%- if active_miner.ip in miner_errors %}Check your miner{%- else %}OK{%- endif %}</td>
-                <!--<td><a target="_blank" href="/{{ active_miner.ip }}/summary">Summary</a> |
+            <td><a target="_blank" href="/{{ active_miner.ip }}/summary">Summary</a> |
                     <a target="_blank" href="/{{ active_miner.ip }}/pools">Pools</a> |
-                    <a target="_blank" href="/{{ active_miner.ip }}/stats">Stats</a></td>-->
+                <a target="_blank" href="/{{ active_miner.ip }}/stats">Stats</a></td>
                 <td><a href={{ url_for('antminer.delete_miner', id=active_miner.id) }}><img src="/static/images/assets/remove.png"></img></a></td>
             </tr>
         {%- endfor %}

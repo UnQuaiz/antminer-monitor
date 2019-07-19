@@ -1,6 +1,10 @@
+import time
+
+from antminermonitor.blueprints.asicminer.models import Miner
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from lib.pycgminer import (get_summary,
+from lib.pycgminer import (get_total,
+                           get_summary,
                            get_pools,
                            get_stats,
                            )
@@ -30,3 +34,17 @@ def pools(ip):
 def stats(ip):
     output = get_stats(ip)
     return jsonify(output)
+
+
+@antminer_json.route('/all/total')
+@login_required
+def total():
+    res = dict({'timestamp': int(time.time())})
+    total = []
+    miners = Miner.query.all()
+    for miner in miners:
+        info = dict({"IP": miner.ip})
+        info.update(get_total(miner.ip))
+        total.append(info)
+    res.update({'total': total})
+    return res

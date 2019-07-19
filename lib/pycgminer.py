@@ -113,6 +113,15 @@ def get_stats(ip):
     return dict(output)
 
 
+def get_total(ip):
+    info = dict({})
+    cgminer = CgminerAPI(host=ip)
+    info.update(cgminer.summary())
+    info.update(cgminer.pools())
+    info.update(cgminer.stats())
+    return info
+
+
 if __name__ == '__main__':
     L3 = CgminerAPI(host='192.168.1.103')
     print(L3.stats())
